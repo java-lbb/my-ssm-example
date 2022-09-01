@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--扫描controller相关的bean-->
+    <context:component-scan base-package="com.lb.ssm.controller"/>
+    <!-- 1.开启SpringMVC注解驱动 -->
+    <mvc:annotation-driven/>
+
+    <!--<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        &lt;!&ndash;设置最大缓存,单位byte&ndash;&gt;
+        <property name="maxInMemorySize" value="1024"/>
+        &lt;!&ndash;所有文件总大小，单位byte&ndash;&gt;
+        <property name="maxUploadSize" value="92160"/>
+        &lt;!&ndash;单个文件大小,单位byte&ndash;&gt;
+        <property name="maxUploadSizePerFile" value="10240"/>
+    </bean>-->
+
+    <!--jackSon日期格式化-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="dateFormat">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg name="pattern" value="yyyy-MM-dd HH:mm:ss"/>
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--<mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="fastJsonConfig">
+                    <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+                        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+                        <property name="charset" value="utf-8"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>-->
+
+</beans>

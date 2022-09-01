@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lb.ssm.mapper.OrdersMapper">
+
+<insert id="insert">
+    INSERT INTO orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="orders.number != null">
+            number,
+        </if>
+        <if test="orders.userId != null">
+            user_id,
+        </if>
+        <if test="orders.detail != null and orders.detail != '' ">
+            detail,
+        </if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="orders.number != null">
+            #{orders.number},
+        </if>
+        <if test="orders.userId != null">
+           #{orders.userId},
+        </if>
+        <if test="orders.detail != null and orders.detail != '' ">
+            #{orders.detail}
+        </if>
+    </trim>
+
+</insert>
+
+<update id="update">
+    UPDATE orders
+    <set>
+        <if test="orders.number != null">
+            orders.number= #{orders.number},
+        </if>
+        <if test="orders.detail != null and orders.detail!= ''">
+            orders.detail= #{orders.detail}
+        </if>
+    </set>
+    <where>
+        <if test="orders.userId != null">
+            user_id=#{orders.userId}
+        </if>
+    </where>
+
+    </update>
+
+<select id="select" resultMap="OrdersBaseResultMap">
+    SELECT  number, user_id, detail, create_date
+    FROM orders
+    WHERE user_id=#{userId}
+    </select>
+
+    <resultMap id="OrdersBaseResultMap" type="Orders">
+        <id property="userId" column="user_id"/>
+        <result property="number" column="number"/>
+        <result property="detail" column="detail"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+</mapper>
